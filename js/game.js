@@ -1,38 +1,8 @@
-//Declaring word scoring matrix//
-
-const newAlphabet = {
-  a: 1,
-  e: 1,
-  i: 1,
-  o: 1,
-  u: 1,
-  l: 1,
-  n: 1,
-  r: 1,
-  s: 1,
-  t: 1,
-  d: 2,
-  g: 2,
-  b: 3,
-  c: 3,
-  m: 3,
-  p: 3,
-  f: 4,
-  h: 4,
-  v: 4,
-  w: 4,
-  y: 4,
-  k: 5,
-  j: 8,
-  x: 8,
-  q: 10,
-  z: 10,
-};
-
 //Declaring word theme sets?//
 
 var USstates = [
 "A",
+"AB",
 "ALABAMA",
 "ALASKA",
 "ARIZONA",
@@ -85,7 +55,139 @@ var USstates = [
 "WYOMING"
 ];
 
-// import { USstates } from './themesets.js';
+var colors = [
+"RED",
+"ORANGE",
+"YELLOW",
+"GREEN",
+"BLUE",
+"INDIGO",
+"VIOLET"];
+
+var euroCountries = [
+"ALBANIA",
+"ANDORRA",
+"ARMENIA",
+"AUSTRIA",
+"AZERBAIJAN",
+"BELARUS",
+"BELGIUM",
+"BOSNIAANDHERZEGOVINA",
+"BULGARIA",
+"CROATIA",
+"CYPRUS",
+"CZECHREPUBLIC",
+"DENMARK",
+"ESTONIA",
+"FINLAND",
+"FRANCE",
+"GEORGIA",
+"GERMANY",
+"GREECE",
+"HUNGARY",
+"ICELAND",
+"IRELAND",
+"ITALY",
+"KOSOVO",
+"LATVIA",
+"LIECHTENSTEIN",
+"LITHUANIA",
+"LUXEMBOURG",
+"MACEDONIA",
+"MALTA",
+"MOLDOVA",
+"MONACO",
+"MONTENEGRO",
+"THENETHERLANDS",
+"NORWAY",
+"POLAND",
+"PORTUGAL",
+"ROMANIA",
+"RUSSIA",
+"SANMARINO",
+"SERBIA",
+"SLOVAKIA",
+"SLOVENIA",
+"SPAIN",
+"SWEDEN",
+"SWITZERLAND",
+"TURKEY",
+"UKRAINE",
+"UNITEDKINGDOM",
+"VATICANCITY"];
+
+var porscheCars = [
+"BOXTER",
+"CAYENNE",
+"MACAN",
+"PANAMERA",
+"TAYCAN"];
+
+var laParishes = [    
+"ACADIA",
+"ALLEN",
+"ASCENSION",
+"ASSUMPTION",
+"AVOYELLES",
+"BEAUREGARD",
+"BIENVILLE",
+"BOSSIER",
+"CADDO",
+"CALCASIEU",
+"CALDWELL",
+"CAMERON",
+"CATAHOULA",
+"CLAIBORNE",
+"CONCORDIA",
+"DESOTO",
+"EASTBATONROUGE",
+"EASTCARROLL",
+"EASTFELICIANA",
+"EVANGELINE",
+"FRANKLIN",
+"GRANT",
+"IBERIA",
+"IBERVILLE",
+"JACKSON",
+"JEFFERSON",
+"JEFFERSONDAVIS",
+"LAFAYETTE",
+"LAFOURCHE",
+"LASALLE",
+"LINCOLN",
+"LIVINGSTON",
+"MADISON",
+"MOREHOUSE",
+"NATCHITOCHES",
+"ORLEANS",
+"OUACHITA",
+"PLAQUEMINES",
+"POINTECOUPEE",
+"RAPIDES",
+"REDRIVER",
+"RICHLAND",
+"SABINE",
+"STBERNARD",
+"STCHARLES",
+"STHELENA",
+"STJAMES",
+"STJOHNTHEBAPTIST",
+"STLANDRY",
+"STMARTIN",
+"STMARY",
+"STTAMMANY",
+"TANGIPAHOA",
+"TENSAS",
+"TERREBONNE",
+"UNION",
+"VERMILION",
+"VERNON",
+"WASHINGTON",
+"WEBSTER",
+"WESTBATONROUGE",
+"WESTCARROLL",
+"WESTFELICIANA",
+"WINN"];
 
 //Define global variables and set to zero//
 
@@ -112,8 +214,13 @@ var getRandom = function(min, max) {
 function newGame() {
 	$("new-game-button").addClass("disabled");
 	score = 0;
+  currentAlphaIndex = -1;
+  playersWord = "";
+  speedLevel = 1000;
+  $("#letter-wheel").replaceWith('<span id="letter-wheel">&nbsp;</span>');
 	$("#word-bar").replaceWith('<div id="word-bar">&nbsp;</div>');
-	themeSetID = getRandom(1, 5);
+  $("#score-block").replaceWith('<div id="score-block">00</div>');
+	// themeSetID = getRandom(1, 5);
 	$("#theme-title").html(themeTitle);
 };
 
@@ -155,8 +262,9 @@ $("#stop-button").click(function() {
 		clearInterval(intID);
 		intID = setInterval(letterTurn, speedLevel);
 	} else {
-		prompt("Oh no! You lost!");
-		newGame();
+    clearInterval(intID);
+		alert("Oh no! You lost!");
+		// newGame();
 	};
 
 });
@@ -205,17 +313,17 @@ $("#lock-button").click(function() {
 
     score = scrabbleScore(playersWord);
 
+    $("#score-block").replaceWith('<div id="score-block">' + score + '</div>');
+  	// $("#new-game-button").removeClass("disabled");
 		alert("your word works with a score of " + score + "!");
 	} else {
 		alert("that word doesn't work :(");
 	}
   
-  $("#score-block").replaceWith('<div id="word-bar">' + score + '</div>');
-	$("#new-game-button").removeClass("disabled");
 });
 
 $("#new-game-button").click(function() {
-	//if button is active, run newGame function//
+  newGame();
 });
 
 })
