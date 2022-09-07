@@ -65,6 +65,7 @@ var colors = [
 "VIOLET"];
 
 var euroCountries = [
+"BC",
 "ALBANIA",
 "ANDORRA",
 "ARMENIA",
@@ -117,6 +118,7 @@ var euroCountries = [
 "VATICANCITY"];
 
 var porscheCars = [
+"C",
 "BOXTER",
 "CAYENNE",
 "MACAN",
@@ -124,6 +126,7 @@ var porscheCars = [
 "TAYCAN"];
 
 var laParishes = [    
+"A",
 "ACADIA",
 "ALLEN",
 "ASCENSION",
@@ -195,6 +198,7 @@ var score = 0;
 var intID = 0;
 // var letterNow = 0;
 var speedLevel = 1000;
+var themeSet = 0;
 var themeSetID = 0;
 var themeTitle = 0;
 // var themeSet = 
@@ -209,6 +213,18 @@ var getRandom = function(min, max) {
 	return Math.floor(Math.random() * (max - min) + min);
 };
 
+//Password Preview Function//
+
+function passwordPopup() {
+  //modal popup
+  //prompt for password
+
+  //Game Rules
+  
+
+};
+
+
 //New Game Function//
 
 function newGame() {
@@ -220,8 +236,30 @@ function newGame() {
   $("#letter-wheel").replaceWith('<span id="letter-wheel">&nbsp;</span>');
 	$("#word-bar").replaceWith('<div id="word-bar">&nbsp;</div>');
   $("#score-block").replaceWith('<div id="score-block">00</div>');
-	// themeSetID = getRandom(1, 5);
-	$("#theme-title").html(themeTitle);
+  themeSetID = getRandom(0,5);
+  switch (themeSetID) {
+    case 0:
+      themeTitle = "US States";
+      themeSet = USstates;
+      break;
+    case 1:
+      themeTitle = "Colors of the Rainbow";
+      themeSet = colors;
+      break;
+    case 2:
+      themeTitle = "European Countries";
+      themeSet = euroCountries;
+      break;
+    case 3:
+      themeTitle = "Porsche Car Models";
+      themeSet = porscheCars;
+      break;
+    case 4:
+      themeTitle = "Louisiana Parishes";
+      themeSet = laParishes;
+      break;
+  };
+	$("#theme-title").html('<span id ="theme-title">' + themeTitle + '</span>');
 };
 
 //Letterwheel turn function//
@@ -237,6 +275,8 @@ function letterTurn() {
 
 $(document).ready(function() {
 
+//Call Password Preview Popup//
+
 //Call the newGame Function//
 
 newGame();
@@ -249,7 +289,7 @@ $("#start-button").click(function() {
 
 $("#stop-button").click(function() {
 	playersWord = playersWord + alphabet[currentAlphaIndex];
-	var matches = USstates.filter(element => {
+	var matches = themeSet.filter(element => {
 		if (element.startsWith(playersWord)) {
 			return true;
 		}
@@ -271,8 +311,8 @@ $("#stop-button").click(function() {
 
 $("#lock-button").click(function() {
 	clearInterval(intID);
-	var wordCheck = USstates.filter(element => {
-		if (USstates.includes(playersWord)) {
+	var wordCheck = themeSet.filter(element => {
+		if (themeSet.includes(playersWord)) {
 			return true;
 		}
 	});
